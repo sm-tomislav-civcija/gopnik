@@ -1,0 +1,47 @@
+# Start dev environment:
+# ----------------------
+# ./.docker/start.sh
+#
+# Access running container:
+# -------------------------
+# docker exec -it app sh                       // open a remote bash terminal
+# mysql -h 127.0.0.1 --port=3307 -uweekly -p4zPwR7juw75NZMV9  //connect to DB through terminal
+#
+# Local docker images / containers:
+# ---------------------------------
+# docker images -a                             // display all local images
+# docker ps -a                                 // display all local containers
+# docker ps -aq | xargs docker rm -f           // kill all local containers
+# docker images -aq | xargs docker rmi -f      // delete all local images
+# docker volume rm `docker volume ls -q -f dangling=true` // delete all dangling volumes
+version: "2"
+
+services:
+    php:
+        build: .docker/php7-fpm
+        volumes:
+            - ./:/var/www/
+            - ./logs/symfony:/var/www/symfony/app/logs
+    nginx:
+        build: .docker/nginx
+        ports:
+            - 6969:80
+        volumes_from:
+            - php
+        volumes:
+            - ./logs/nginx/:/var/log/nginx
+    db:
+        image: percona:5.6
+        environment:
+            MYSQL_DATABASE: local_db
+            MYSQL_USER: local_user
+            MYSQL_PASSWORD: local_password
+            MYSQL_ROOT_PASSWORD: root
+        ports:
+            - 3306:3306
+        volumes:
+            - mysql-data:/var/lib/mysql:delegated
+            - .docker/db/mysqld.cnf:/etc/mysql/conf.d/mysqld.cnf
+
+volumes:
+    mysql-data:
