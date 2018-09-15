@@ -1,0 +1,11 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}New GopnikProduct{% endblock %}
+
+{% block body %}
+    <h1>Create new GopnikProduct</h1>
+
+    {{ include('gopnik_product/_form.html.twig') }}
+
+    <a href="{{ path('gopnik_product_index') }}">back to list</a>
+{% endblock %}

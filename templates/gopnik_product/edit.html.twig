@@ -1,0 +1,13 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Edit GopnikProduct{% endblock %}
+
+{% block body %}
+    <h1>Edit GopnikProduct</h1>
+
+    {{ include('gopnik_product/_form.html.twig', {'button_label': 'Update'}) }}
+
+    <a href="{{ path('gopnik_product_index') }}">back to list</a>
+
+    {{ include('gopnik_product/_delete_form.html.twig') }}
+{% endblock %}

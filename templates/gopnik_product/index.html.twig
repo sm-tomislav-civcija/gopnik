@@ -1,0 +1,43 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}GopnikProduct index{% endblock %}
+
+{% block body %}
+    <h1>GopnikProduct index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Name</th>
+                <th>Price</th>
+                <th>ImageUrl</th>
+                <th>Description</th>
+                <th>Color</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for gopnik_product in gopnik_products %}
+            <tr>
+                <td>{{ gopnik_product.id }}</td>
+                <td>{{ gopnik_product.name }}</td>
+                <td>{{ gopnik_product.price }}</td>
+                <td>{{ gopnik_product.imageUrl }}</td>
+                <td>{{ gopnik_product.description }}</td>
+                <td>{{ gopnik_product.color }}</td>
+                <td>
+                    <a href="{{ path('gopnik_product_show', {'id': gopnik_product.id}) }}">show</a>
+                    <a href="{{ path('gopnik_product_edit', {'id': gopnik_product.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="7">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('gopnik_product_new') }}">Create new</a>
+{% endblock %}

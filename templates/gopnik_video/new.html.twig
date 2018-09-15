@@ -1,0 +1,11 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}New GopnikVideo{% endblock %}
+
+{% block body %}
+    <h1>Create new GopnikVideo</h1>
+
+    {{ include('gopnik_video/_form.html.twig') }}
+
+    <a href="{{ path('gopnik_video_index') }}">back to list</a>
+{% endblock %}
