@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\GopnikProduct;
 use App\Form\GopnikProductType;
+use App\Model\GopnikProductModel;
 use App\Repository\GopnikProductRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -19,18 +20,14 @@ class GopnikProductController extends AbstractController
 {
 	/**
 	 * @Route("/all", name="gopnik_product_all", methods="GET")
-	 * @param GopnikProductRepository $gopnikProductRepository
+	 * @param GopnikProductModel $model
 	 * @return Response
 	 */
-	public function list(GopnikProductRepository $gopnikProductRepository): Response
-	{
-		$gopnik_products = $gopnikProductRepository->findAll();
-		return new JsonResponse($gopnik_products);
-	}
-
-
-
-
+    public function list(GopnikProductModel $model): Response
+    {
+        $gopnik_products = $model->getAllProducts();
+        return new JsonResponse($gopnik_products);
+    }
 
 
     /**

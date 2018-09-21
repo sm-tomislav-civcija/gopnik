@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\GopnikVideo;
 use App\Form\GopnikVideoType;
+use App\Model\GopnikVideoModel;
 use App\Repository\GopnikVideoRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -18,20 +19,66 @@ class GopnikVideoController extends AbstractController
 {
 	/**
 	 * @Route("/all", name="gopnik_product_all", methods="GET")
-	 * @param GopnikVideoRepository $gopnikVideoRepository
+	 * @param GopnikVideoModel $model
 	 * @return Response
 	 */
-	public function list(GopnikVideoRepository $gopnikVideoRepository): Response
+	public function list(GopnikVideoModel $model): Response
 	{
-		$gopnik_videos = $gopnikVideoRepository->findAll();
+		$gopnik_videos = $model->getAllVideos();
 		return new JsonResponse($gopnik_videos);
 	}
 
 
-
-
-
 	/**
+	 * @Route("/last", name="gopnik_product_last", methods="GET")
+	 * @param GopnikVideoModel $model
+	 * @return Response
+	 */
+	public function last(GopnikVideoModel $model): Response
+	{
+		$gopnik_videos = $model->getLastVideo();
+		return new JsonResponse($gopnik_videos);
+	}
+    /**
+	 * @Route("/first", name="gopnik_product_first", methods="GET")
+	 * @param GopnikVideoModel $model
+	 * @return Response
+	 */
+	public function first(GopnikVideoModel $model): Response
+	{
+		$gopnik_videos = $model->getFirstVideo();
+		return new JsonResponse($gopnik_videos);
+	}
+
+    /**
+     * @Route("/{id}", name="gopnik_video_show", methods="GET")
+     * @param GopnikVideoModel $model
+     * @return Response
+     */
+    public function show(GopnikVideoModel $model, $id): Response
+    {
+        $gopnik_videos = $model->getNthVideo($id);
+        return new JsonResponse($gopnik_videos);
+    }
+
+
+    /**
+     * @Route("/{col}/{val}", name="gopnik_video_filter", methods="GET")
+     * @param GopnikVideoModel $model
+     * @return Response
+     */
+    public function filter(GopnikVideoModel $model, $col, $val): Response
+    {
+        $gopnik_videos = $model->getFilteredVideo($col, $val);
+        return new JsonResponse($gopnik_videos);
+    }
+
+
+
+
+
+
+    /**
      * @Route("/", name="gopnik_video_index", methods="GET")
      */
     public function index(GopnikVideoRepository $gopnikVideoRepository): Response
@@ -62,13 +109,6 @@ class GopnikVideoController extends AbstractController
         ]);
     }
 
-    /**
-     * @Route("/{id}", name="gopnik_video_show", methods="GET")
-     */
-    public function show(GopnikVideo $gopnikVideo): Response
-    {
-        return $this->render('gopnik_video/show.html.twig', ['gopnik_video' => $gopnikVideo]);
-    }
 
     /**
      * @Route("/{id}/edit", name="gopnik_video_edit", methods="GET|POST")

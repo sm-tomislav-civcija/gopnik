@@ -76,9 +76,9 @@ class GopnikVideo implements \JsonSerializable
 	{
 		return [
 			"id"      => $this->getId(),
-			"name"    => $this->getTitle(),
-			"price"   => $this->getText(),
-			"img_src" => $this->getVideoUrl(),
+			"title"    => $this->getTitle(),
+			"text"   => $this->getText(),
+			"video_url" => $this->getVideoUrl(),
 		];
 	}
 }
