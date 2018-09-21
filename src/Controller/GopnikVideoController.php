@@ -18,7 +18,7 @@ use Symfony\Component\Routing\Annotation\Route;
 class GopnikVideoController extends AbstractController
 {
 	/**
-	 * @Route("/all", name="gopnik_product_all", methods="GET")
+	 * @Route("/all", name="gopnik_video_all", methods="GET")
 	 * @param GopnikVideoModel $model
 	 * @return Response
 	 */
